@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>G-Chat</title>
+    <script>
+        async function sendMessage() {
+            const message = document.getElementById('user-input').value;
+            if (message.trim() === '') return; // Prevent empty messages
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message })
+            });
+            const data = await response.json();
+
+            // Add messages to the chat log
+            const chatLog = document.getElementById('chat-log');
+            chatLog.innerHTML += `<div class="message user-message">${message}</div>`;
+            chatLog.innerHTML += `<div class="message bot-message">${data.response}</div>`;
+
+            // Scroll to bottom
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+            // Clear the input field
+            document.getElementById('user-input').value = '';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userInput = document.getElementById('user-input');
+            userInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="chat-container">
+        <h1>G-CHAT</h1>
+        <div id="chat-log"></div>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type your message here..." />
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</body>
+<footer>
+    @ShaunakGhosh-hub 2024
+</footer>
+</html>
