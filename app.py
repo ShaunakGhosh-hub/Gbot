@@ -1,12 +1,7 @@
-import os
 import random
 import requests
 from flask import Flask, request, jsonify, render_template
-from dotenv import load_dotenv  # Import dotenv to load environment variables
 from intents import intents  # Import intents from intents.py
-
-# Load environment variables from the .env file
-load_dotenv()
 
 app = Flask(__name__)
 
@@ -15,50 +10,53 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-# Chat route
+# Chat route to handle user messages
 @app.route('/chat', methods=['POST'])
 def chat():
-    user_message = request.json.get('message')
-    bot_response = get_bot_response(user_message)
-    return jsonify({'response': bot_response})
+    user_message = request.json.get('message')  # Get user input from the request
+    bot_response = get_bot_response(user_message)  # Process the message
+    return jsonify({'response': bot_response})  # Return the chatbot response
 
-# Function to process the user message
+# Function to process user message
 def get_bot_response(message):
     message = message.lower()
-    
-    # Check predefined intents
+
+    # Check predefined intents first
     for intent, values in intents.items():
         for pattern in values['patterns']:
             if pattern in message:
-                return random.choice(values['responses'])
-    
+                return random.choice(values['responses'])  # Return a predefined response
+
     # If no intent matches, fetch from Gemini API
     return fetch_from_gemini(message)
 
-# Function to fetch response from Gemini API
+# Function to fetch response from Google Gemini API
 def fetch_from_gemini(query):
     api_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent"
-    api_key = os.getenv("GEMINI_API_KEY")  # Fetch API key from environment variables
     headers = {
         'Content-Type': 'application/json'
     }
     payload = {
         "contents": [{"parts": [{"text": query}]}]
     }
+    api_key = "AIzaSyAH3sTbPYUHaBYFFu0t0IQIykWqPdRr5s0"  # Replace with your API key
 
     try:
-        # Send request to the API
+        # Send the POST request to Gemini API
         response = requests.post(f"{api_url}?key={api_key}", json=payload, headers=headers)
-        response.raise_for_status()
+        response.raise_for_status()  # Raise an error if status code is not 2xx
+
+        # Parse and process the response
         data = response.json()
+        print("Response:", data)  # Log the response for debugging
 
         if 'candidates' in data:
             return data['candidates'][0]['content']['parts'][0]['text']
         else:
-            return "I couldn't fetch the information you requested."
+            return "I'm sorry, I couldn't fetch the information you need."
 
     except requests.exceptions.RequestException as e:
-        print(f"Error fetching from Gemini API: {e}")
+        print("Error while fetching from Gemini API:", e)
         return "I'm having trouble accessing the web right now."
 
 # Run the Flask app
