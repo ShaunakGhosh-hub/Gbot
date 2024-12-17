@@ -104,7 +104,7 @@ button:hover {
 
 footer {
     text-align: center;
-    background-color: #021242;
+    background-color: #070513;
     padding: 10px;
     color: white;
     font-size: 0.9em;
@@ -122,5 +122,9 @@ footer {
     button {
         padding: 8px 15px;
         font-size: 0.9em;
+    }
+    footer{
+        margin-bottom: 50px;
+        
     }
 }
