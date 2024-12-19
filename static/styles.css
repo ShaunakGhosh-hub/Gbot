@@ -24,7 +24,9 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
 }
 
 #chat-log {
@@ -34,7 +36,10 @@ h1 {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    max-height: calc(100vh - 150px); /* Adjust according to input-container height */
 }
+
+
 
 .message {
     padding: 10px 15px;
@@ -63,6 +68,8 @@ h1 {
     padding: 10px;
     background-color: #021242;
     border-top: 1px solid #333;
+    position: sticky;
+    bottom: 0;
 }
 
 #user-input {
@@ -127,4 +134,8 @@ footer {
         margin-bottom: 50px;
         
     }
+    #chat-log {
+        -webkit-overflow-scrolling: touch;
+    }
+    
 }
