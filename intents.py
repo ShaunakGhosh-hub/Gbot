@@ -57,6 +57,6 @@ intents = {
     },
     'GTECH': {
         'patterns': ['what is gtech', 'what to gchat', 'how can you help me'],
-        'responses': ['It is online learning platform where you can access notes and information for free..lets get learning']
+        'responses': ['It is online learning platform build by ShaunakGhosh-hub where you can access notes and information for free..lets get learning']
     }
 }
