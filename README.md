@@ -1,6 +1,4 @@
-Here is a basic README file for your project:
 
-```markdown
 # Gbot
 
 Gbot is a Python-based chatbot application. You can access the live application [here](https://gbotpython-app-py.onrender.com/).
