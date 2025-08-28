@@ -39,7 +39,7 @@ def fetch_from_gemini(query):
     payload = {
         "contents": [{"parts": [{"text": query}]}]
     }
-    api_key = "AIzaSyAH3sTbPYUHaBYFFu0t0IQIykWqPdRr5s0"  # Replace with your API key
+    api_key = "AIzaSyBbvFQkWxyI2rtrlvBIQ7wGQzQlBW1pPtY"  
 
     try:
         # Send the POST request to Gemini API
