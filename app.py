@@ -32,14 +32,14 @@ def get_bot_response(message):
 
 # Function to fetch response from Google Gemini API
 def fetch_from_gemini(query):
-    api_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    api_url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
     headers = {
         'Content-Type': 'application/json'
     }
     payload = {
         "contents": [{"parts": [{"text": query}]}]
     }
-    api_key = "AIzaSyBbvFQkWxyI2rtrlvBIQ7wGQzQlBW1pPtY"  
+    api_key = "AIzaSyBbvFQkWxyI2rtrlvBIQ7wGQzQlBW1pPtY"  # replace with your valid Gemini API key
 
     try:
         # Send the POST request to Gemini API
@@ -50,8 +50,8 @@ def fetch_from_gemini(query):
         data = response.json()
         print("Response:", data)  # Log the response for debugging
 
-       if "candidates" in data:
-    return data["candidates"][0]["content"]["parts"][0].get("text", "")
+        if "candidates" in data:
+            return data["candidates"][0]["content"]["parts"][0].get("text", "")
         else:
             return "I'm sorry, I couldn't fetch the information you need."
 
